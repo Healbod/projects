@@ -64,6 +64,7 @@
 * [дополнительные признаки](taxi_NY/week6_taxi_TimeSeries.ipynb)
 * [оформление проекта](taxi_NY/week7_taxi_TimeSeries.ipynb)
 
+
 **РЕЗУЛЬТАТЫ**
 
 Результаты проекта представлены в виде:
