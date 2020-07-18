@@ -73,7 +73,7 @@
 
 * временной ряд фактического и прогнозируемого спроса на такси в выбираемой области (можно ознакомится по этой [ссылке](taxi_NY/data/df_regions/predict_figure.html)
 
-![predict_figure](taxi_NY/data/df_regions/predict_figure.jpg "Predict_figure")
+![predict_figure](taxi_NY/data/df_regions/predict_figure.JPG "Predict_figure")
 
 
 **ИТОГИ**
