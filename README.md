@@ -37,13 +37,13 @@
 
 Для решения этой задачи, сырые данные очищаются от ошибок и аномалий. Далее Нью-Йорк вписывается в прямоугольник от -74.25559 до -73.70001 градусов долготы и от 40.49612 до 40.91553 широты. Получившийся прямоугольник разбивается на 2500 одинаковых прямоугольных районов — по 50 интервалов вдоль каждой оси.
  
-![regions_NY](https://github.com/Healbod/projects/tree/master/predict_taxi_NY/data/df_regions/regions.png "regions_NY")
+![regions_NY](https://github.com/Healbod/projects/tree/master/taxi_NY/data/df_regions/regions.png "regions_NY")
 
 Отфильтруем районы, оставив те из которых совершается в среднем более 5 поездок в час.
 
-![regions_NY](https://github.com/Healbod/projects/tree/master/predict_taxi_NY/data/df_regions/regions_fillter.PNG "regions_NY")
+![regions_NY](https://github.com/Healbod/projects/tree/master/taxi_NY/data/df_regions/regions_fillter.PNG "regions_NY")
 
-Данные из получившихся регионов агрегируются по времени. Они представляют собой почасовые временные ряды с количествами поездок из каждого района.
+Данные из получившихся районов агрегируются по времени. Они представляют собой почасовые временные ряды с количествами поездок из каждого района.
 Задача прогнозирования таких рядов решалась с помощью авторегрессионных моделей, прогнозируя каждый ряд независимо. Так как ряды имеют сложную сезонность — суточную, недельную и годовую, для их моделирования использовать модель ARIMA с дополнительной регрессией на внешние признаки.
 
 Для увеличения точности предсказания моделей были введены дополнительные признаки:
@@ -56,13 +56,13 @@
 * и др.
 
 Подробнее с этапами выполнения проекта можно ознакомиться по ссылкам:
-* [знакомство с данными и агрегация](https://github.com/Healbod/projects/tree/master/predict_taxi_NY/week1_taxi_TimeSeries.ipynb)
-* [работа с геоданными](https://github.com/Healbod/projects/tree/master/predict_taxi_NY/week2_taxi_TimeSeries.ipynb)
-* [прогнозирование ряда со сложной сезонностью](https://github.com/Healbod/projects/tree/master/predict_taxi_NY/week3_taxi_TimeSeries.ipynb)
-* [прогнозирование большого количества рядов](https://github.com/Healbod/projects/tree/master/predict_taxi_NY/week4_taxi_TimeSeries.ipynb)
-* [прогнозирование с помощью регрессии](https://github.com/Healbod/projects/tree/master/predict_taxi_NY/week5_taxi_TimeSeries.ipynb)
-* [дополнительные признаки](https://github.com/Healbod/projects/tree/master/predict_taxi_NY/week6_taxi_TimeSeries.ipynb)
-* [оформление проекта](https://github.com/Healbod/projects/tree/master/predict_taxi_NY/week7_taxi_TimeSeries.ipynb)
+* [знакомство с данными и агрегация](https://github.com/Healbod/projects/tree/master/taxi_NY/week1_taxi_TimeSeries.ipynb)
+* [работа с геоданными](https://github.com/Healbod/projects/tree/master/taxi_NY/week2_taxi_TimeSeries.ipynb)
+* [прогнозирование ряда со сложной сезонностью](https://github.com/Healbod/projects/tree/master/taxi_NY/week3_taxi_TimeSeries.ipynb)
+* [прогнозирование большого количества рядов](https://github.com/Healbod/projects/tree/master/taxi_NY/week4_taxi_TimeSeries.ipynb)
+* [прогнозирование с помощью регрессии](https://github.com/Healbod/projects/tree/master/taxi_NY/week5_taxi_TimeSeries.ipynb)
+* [дополнительные признаки](https://github.com/Healbod/projects/tree/master/taxi_NY/week6_taxi_TimeSeries.ipynb)
+* [оформление проекта](https://github.com/Healbod/projects/tree/master/taxi_NY/week7_taxi_TimeSeries.ipynb)
 
 **РЕЗУЛЬТАТЫ**
 
