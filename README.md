@@ -57,7 +57,7 @@
 
 Подробнее с этапами выполнения проекта можно ознакомиться по ссылкам:
 * [знакомство с данными и агрегация](taxi_NY/week1_taxi_TimeSeries.ipynb)
-* [работа с геоданными](taxi_NY/week2_taxi_TimeSeries.ipynb)
+* [работа с геоданными](taxi_NY/week3_taxi_TimeSeries.ipynb)
 * [прогнозирование ряда со сложной сезонностью](taxi_NY/week3_taxi_TimeSeries.ipynb)
 * [прогнозирование большого количества рядов](taxi_NY/week4_taxi_TimeSeries.ipynb)
 * [прогнозирование с помощью регрессии](taxi_NY/week5_taxi_TimeSeries.ipynb)
