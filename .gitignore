@@ -1,0 +1,39 @@
+﻿taxi_NY/data/yellow_tripdata/*
+taxi_NY/data/reviews/*
+
+# Untracked files:
+# Documentation/foo.html
+# Documentation/gitignore.html
+# file.o
+# lib.a
+# src/internal.o
+
+# ignore objects and archives, anywhere in the tree.
+# *.[oa]
+# ignore generated html files,
+# *.html
+
+# except foo.html which is maintained by hand
+# !foo.html
+
+# Untracked files:
+# Documentation/foo.html
+
+# exclude everything except directory foo/bar
+# /*
+# !/foo
+# /foo/*
+# !/foo/bar
+# комментарий — эта строка игнорируется
+# не обрабатывать файлы, имя которых заканчивается на .a
+#*.a
+# НО отслеживать файл lib.a, несмотря на то, что мы игнорируем все .a файлы с помощью предыдущего правила
+#!lib.a
+# игнорировать только файл TODO находящийся в корневом каталоге, не относится к файлам вида subdir/TODO
+#/TODO
+# игнорировать все файлы в каталоге build/
+#build/
+# игнорировать doc/notes.txt, но не doc/server/arch.txt
+#doc/*.txt
+# игнорировать все .txt файлы в каталоге doc/
+#doc/**/*.txt
