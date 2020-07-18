@@ -39,6 +39,9 @@
  
 ![alt text](https://github.com/Healbod/projects/tree/master/taxi_NY/data/df_regions/regions.jpg)
 
+
+![alt text](taxi_NY/data/df_regions/regions.jpg)
+
 Отфильтруем районы, оставив те из которых совершается в среднем более 5 поездок в час.
 
 ![alt text](https://github.com/Healbod/projects/tree/master/taxi_NY/data/df_regions/regions_fillter.jpg "regions_fillter")
