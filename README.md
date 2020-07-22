@@ -1,155 +1,153 @@
-# Примеры проектов
+# Project examples
 
-* [Прогнозирование количества поездок такси в каждом районе Нью-Йорка в ближайшие часы](#Taxi_TimeSeries)
-* [Прогнозирование победителя в игре Dota 2](#Dota_predict_win)
+* [Predicting the number of taxi rides in each New York borough in the coming hours](#Taxi_TimeSeries)
+* [Predicting the winner in the Dota 2 game](#Dota_predict_win)
 
 ---
 
-## <a name="Taxi_TimeSeries"></a> Прогнозирование количества поездок такси в каждом районе Нью-Йорка в ближайшие часы 
+## <a name="Taxi_TimeSeries"></a> Predicting the number of taxi rides in each New York borough in the coming hours 
 
-Нью-Йоркская комиссия по такси и лимузинам (TLC) предоставляет подробные анонимизированные данные о поездках клиентов с 2009 года. Машины, выкрашенные жёлтым, имеют право брать пассажиров на улицах в любом из пяти бюро города.
+The New York Taxi and Limousine Commission (TLC) has been providing detailed, anonymized travel data for customers since 2009. Cars painted yellow have the right to take passengers on the streets at any of the five city bureaus.
 
-Сырые данные о поездках в жёлтом такси можно найти на сайте [TLC](http://www.nyc.gov/html/tlc/html/about/trip_record_data.shtml).
-Эти данные разбиты на файлы по месяцам. В каждом из файлов содержится следующая информация о поездках:
-* время начала поездки
-* время окончания поездки
-* долгота и широта точки начала поездки
-* долгота и широта точки окончания поездки
-* количество пассажиров
-* расстояние по счётчику
-* тип тарифа (одна из шести категорий)
-* способ оплаты (одна из шести категорий)
-* стоимость поездки по счётчику
-* налог на счётчик
-* доплата за поездки в пиковые часы и ночью
-* доплата за проезд по платным дорогам
-* доплата за проезд, взимаемая с каждой поездки с января 2015
-* размер чаевых
-* общая стоимость поездки
-* провайдер данных (одна из двух категорий)
-* бинарный флаг, показывающий, были ли данные о поездке получены немедленно после её окончания, или какое-то время хранились в памяти автомобиля.
+The raw data for yellow taxi rides can be found on the [TLC](http://www.nyc.gov/html/tlc/html/about/trip_record_data.shtml).
+This data is broken down into files by month. Each file contains the following trip information:
+* start time of the trip
+* trip end time
+* longitude and latitude of the starting point of the trip
+* longitude and latitude of the trip end point
+* number of passengers
+* distance by meter
+* tariff type (one of six categories)
+* payment method (one of six categories)
+* trip cost by meter
+* meter tax
+* surcharge for travel during peak hours and at night
+* surcharge for travel on toll roads
+* toll surcharge charged on each trip from January 2015
+* tip size
+* total cost of the trip
+* data provider (one of two categories)
+* a binary flag showing whether the trip data was received immediately after its completion, or was stored in the car's memory for some time.
 
-Подробнее можно узнать [здесь](http://www.nyc.gov/html/tlc/downloads/pdf/data_dictionary_trip_records_yellow.pdf)
+More details can be found [here](http://www.nyc.gov/html/tlc/downloads/pdf/data_dictionary_trip_records_yellow.pdf)
  
-**ЗАДАЧА**
-> Научиться предсказывать количество поездок в ближайшие часы в каждом районе Нью-Йорка.
+**TARGET**
+> Learn to predict the number of trips in the coming hours in each borough of New York.
 
-Для решения этой задачи, сырые данные очищаются от ошибок и аномалий. Далее Нью-Йорк вписывается в прямоугольник от -74.25559 до -73.70001 градусов долготы и от 40.49612 до 40.91553 широты. Получившийся прямоугольник разбивается на 2500 одинаковых прямоугольных районов — по 50 интервалов вдоль каждой оси.
+To solve this problem, the raw data is cleaned of errors and anomalies. Further, New York fits into a rectangle from -74.25559 to -73.70001 degrees of longitude and from 40.49612 to 40.91553 latitude. The resulting rectangle is divided into 2500 identical rectangular regions - 50 intervals along each axis.
  
 ![regions](taxi_NY/data/df_regions/regions.jpg "Regions")
 
-Отфильтруем районы, оставив те из которых совершается в среднем более 5 поездок в час.
+Let's filter out the areas, leaving those of which on average more than 5 trips per hour are made.
 
 ![regions_filter](taxi_NY/data/df_regions/regions_fillter.jpg "Regions_Filter")
 
-Данные из получившихся районов агрегируются по времени. Агрегированные данные представляют собой почасовые временные ряды с количествами поездок из каждого района.
-Задача прогнозирования таких рядов решается с помощью авторегрессионных моделей, прогнозируя каждый ряд независимо. Так как ряды имеют сложную сезонность — суточную, недельную и годовую, для их моделирования используется модель ARIMA с дополнительной регрессией на внешние признаки.
+Data from the resulting areas are aggregated over time. The aggregated data are hourly time series with the number of trips from each area.
+The problem of predicting such series is solved using autoregressive models, predicting each series independently. Since the series have a complex seasonality - daily, weekly and yearly, the ARIMA model with additional regression for external signs is used to model them.
+To increase the predictive accuracy of models, additional features are introduced:
+* average duration of trips
+* average number of passengers
+* average distance by meter
+* average cost of travel
+* total number of trips for the previous half day, day, week
+* information about holidays and etc.
 
-Для увеличения точности предсказания моделей введены дополнительные признаки:
-* средняя длительность поездок
-* среднее количество пассажиров
-* среднее расстояние по счётчику
-* средняя стоимость поездок
-* суммарное количество поездок за предшествующие полдня, сутки, неделю
-* информация о праздничных днях
-* и др.
+More details about the stages of the project can be found at the links:
+* [data introduction and aggregation](taxi_NY/week1_Taxi.ipynb)
+* [work with geodata](taxi_NY/week2_Taxi.ipynb)
+* [forecasting series with complex seasonality](taxi_NY/week3_Taxi.ipynb)
+* [forecasting a large number of rows](taxi_NY/week4_Taxi.ipynb)
+* [prediction using regression](taxi_NY/week5_Taxi.ipynb)
+* [additional signs](taxi_NY/week6_Taxi.ipynb)
+* [project design](taxi_NY/week7_Taxi.ipynb)
 
-Подробнее с этапами выполнения проекта можно ознакомиться по ссылкам:
-* [знакомство с данными и агрегация](taxi_NY/week1_Taxi.ipynb)
-* [работа с геоданными](taxi_NY/week2_Taxi.ipynb)
-* [прогнозирование ряда со сложной сезонностью](taxi_NY/week3_Taxi.ipynb)
-* [прогнозирование большого количества рядов](taxi_NY/week4_Taxi.ipynb)
-* [прогнозирование с помощью регрессии](taxi_NY/week5_Taxi.ipynb)
-* [дополнительные признаки](taxi_NY/week6_Taxi.ipynb)
-* [оформление проекта](taxi_NY/week7_Taxi.ipynb)
+**RESULTS**
 
-**РЕЗУЛЬТАТЫ**
-
-Результаты проекта представлены в виде:
-* карта с визуализацией реального и прогнозируемого спроса на такси в выбираемый пользователем момент времени
+The project results are presented as:
+* a map with visualization of real and projected demand for a taxi at a time selected by the user
 
 ![predict_map](taxi_NY/data/df_regions/predict_map.JPG "Predict_map")
 
-* временной ряд фактического и прогнозируемого спроса на такси в выбираемой пользователем области
+* time series of actual and projected demand for taxi in a user-selectable area
 
 ![predict_figure](taxi_NY/data/df_regions/predict_figure_region.jpg "Predict_figure")
 
-**ИТОГИ**
-> * данный подход может быть применен к задачам, где необходимо спрогнозировать продажи большого количества товаров в большом количестве магазинов, объём снятия денег в сети банкоматов, посещаемость разных страниц сайта и т.д. 
+**CONCLUSIONS**
+> * this approach can be applied to tasks where it is necessary to predict the sales of a large number of goods in a large number of stores, the amount of money withdrawn from the ATM network, traffic to different pages of the site, etc 
 > 
-> В ходе выполнения проекта:
-> * научились работать с геоданными и использовать различные библиотеки, модели и средства для анализа данных
-> * спрогнозировали временные ряды сложной структуры
-> * построили и научились настраивать регрессионные модели, делающие совместные предсказания для большого количества взаимосвязанных рядов
+> During the project:
+> * learned to work with geodata and use various libraries, models and tools for data analysis
+> * predicted time series of complex structure
+> * built and learned how to tune regression models that make joint predictions for a large number of interconnected series
 
  ---
  
  ---
  
-## <a name="Dota_predict_win"></a> Прогнозирование победителя в игре Dota 2
+## <a name="Dota_predict_win"></a> Predicting the winner in a Dota 2 game
 
-Dota 2 — многопользовательская компьютерная игра жанра MOBA. Игроки соревнуются между собой в режиме матча. В каждом матче участвует две команды, 5 человек в каждой. Одна команда играет за светлую сторону (The Radiant), другая — за тёмную (The Dire). Цель каждой команды — уничтожить главное здание базы противника (трон).
+Dota 2 is a multiplayer computer game of the MOBA genre. Players compete against each other in match mode. Each match involves two teams, 5 people in each. One team plays for the light side (The Radiant), the other for the dark side (The Dire). The goal of each team is to destroy the main building of the enemy base (throne).
 
-Существуют разные режимы игры, мы будем рассматривать режим Captain's Mode, в формате которого происходит большая часть киберспортивных мероприятий по Dota 2.
+There are different game modes, we will be considering Captain's Mode, the format of which most of the Dota 2 esports events take place.
  
 ![](http://imgur.com/Du79Kzf.jpg)
  
-**ЗАДАЧА**
-> По первым 5 минутам игры предсказать, какая из команд победит: Radiant или Dire?
+**TARGET**
+> From the first 5 minutes of the game, predict which team will win: Radiant or Dire?
 
-Набор данных был сделан на основе выгрузки [YASP 3.5 Million Data Dump](http://academictorrents.com/details/5c5deeb6cfe1c944044367d2e7465fd8bd2f4acf) реплеев матчей Dota 2 с сайта [yasp.co](http://yasp.co/).
+The dataset was made based on the [YASP 3.5 Million Data Dump](http://academictorrents.com/details/5c5deeb6cfe1c944044367d2e7465fd8bd2f4acf) replays of Dota 2 matches from the site [yasp.co](http://yasp.co/).
 
-С помощью скрипта производится извлечение признаков из известной информации о матче за первые 5 игровых минут, составляет из них таблицу. Таблица поможет быстрее сформировать матрицу объект-признак, вектор ответов и начать применять методы машинного обучения для решения поставленной задачи.
+Using the script, the attributes are extracted from the known information about the match for the first 5 game minutes, and a table is made of them. The table will help you quickly form the object-feature matrix, the response vector and start applying machine learning methods to solve the problem.
 
-В итоговую таблицу вошли следующие признаки
-- `match_id`: идентификатор матча в наборе данных
-- `start_time`: время начала матча (unixtime)
-- `lobby_type`: тип комнаты, в которой собираются игроки (расшифровка в `dictionaries/lobbies.csv`)
-- Наборы признаков для каждого игрока (игроки команды Radiant — префикс `rN`, Dire — `dN`):
-    - `r1_hero`: герой игрока (расшифровка в dictionaries/heroes.csv)
-    - `r1_level`: максимальный достигнутый уровень героя (за первые 5 игровых минут)
-    - `r1_xp`: максимальный полученный опыт
-    - `r1_gold`: достигнутая ценность героя
-    - `r1_lh`: число убитых юнитов
-    - `r1_kills`: число убитых игроков
-    - `r1_deaths`: число смертей героя
-    - `r1_items`: число купленных предметов
-- Признаки события "первая кровь" (first blood). Если событие "первая кровь" не успело произойти за первые 5 минут, то признаки принимают пропущенное значение
-    - `first_blood_time`: игровое время первой крови
-    - `first_blood_team`: команда, совершившая первую кровь (0 — Radiant, 1 — Dire)
-    - `first_blood_player1`: игрок, причастный к событию
-    - `first_blood_player2`: второй игрок, причастный к событию
-- Признаки для каждой команды (префиксы `radiant_` и `dire_`)
-    - `radiant_bottle_time`: время первого приобретения командой предмета "bottle"
-    - `radiant_courier_time`: время приобретения предмета "courier" 
-    - `radiant_flying_courier_time`: время приобретения предмета "flying_courier" 
-    - `radiant_tpscroll_count`: число предметов "tpscroll" за первые 5 минут
-    - `radiant_boots_count`: число предметов "boots"
-    - `radiant_ward_observer_count`: число предметов "ward_observer"
-    - `radiant_ward_sentry_count`: число предметов "ward_sentry"
-    - `radiant_first_ward_time`: время установки командой первого "наблюдателя", т.е. предмета, который позволяет видеть часть игрового поля
-- Итог матча (данные поля отсутствуют в тестовой выборке, поскольку содержат информацию, выходящую за пределы первых 5 минут матча)
-    - `duration`: длительность
-    - `radiant_win`: 1, если победила команда Radiant, 0 — иначе
-    - Состояние башен и барраков к концу матча (см. описание полей набора данных)
+The final table includes the following signs
+- `match_id`: identifier of the match in the dataset
+- `start_time`: match start time (unixtime)
+- `lobby_type`: the type of room in which the players gather (decrypted in` dictionaries / lobbies.csv`)
+- Sets of attributes for each player (Radiant team players - prefix `rN`, Dire -` dN`):
+    - `r1_hero`: player's hero (transcript in dictionaries / heroes.csv)
+    - `r1_level`: the maximum achieved level of the hero (for the first 5 game minutes)
+    - `r1_xp`: maximum experience gained
+    - `r1_gold`: hero value achieved
+    - `r1_lh`: the number of killed units
+    - `r1_kills`: number of killed players
+    - `r1_deaths`: number of hero deaths
+    - `r1_items`: number of purchased items
+- Signs of the "first blood" event. If the "first blood" event did not have time to occur in the first 5 minutes, then the signs take the missing value
+    - `first_blood_time`: game time of first blood
+    - `first_blood_team`: team that made the first blood (0 - Radiant, 1 - Dire)
+    - `first_blood_player1`: the player involved in the event
+    - `first_blood_player2`: the second player involved in the event
+- Attributes for each command (prefixes `radiant_` and` dire_`)
+    - `radiant_bottle_time`: time of the first purchase of the" bottle "item by the team
+    - `radiant_courier_time`: time of purchase of the" courier "item
+    - `radiant_flying_courier_time`: the time when the item" flying_courier "was acquired
+    - `radiant_tpscroll_count`: the number of" tpscroll "items in the first 5 minutes
+    - `radiant_boots_count`: number of" boots "items
+    - `radiant_ward_observer_count`: number of items" ward_observer "
+    - `radiant_ward_sentry_count`: number of" ward_sentry "items
+    - `radiant_first_ward_time`: installation time of the first" observer "by the command, i.e. an object that allows you to see part of the playing field
+- Match result (these fields are absent in the test sample, since they contain information that goes beyond the first 5 minutes of the match)
+    - `duration`: duration
+    - `radiant_win`: 1 if the Radiant team wins, 0 - otherwise
+    - Condition of towers and barracks by the end of the match (see description of dataset fields)
         - `tower_status_radiant`
         - `tower_status_dire`
         - `barracks_status_radiant`
         - `barracks_status_dire`
 
-**РЕЗУЛЬТАТЫ**
+**RESULTS**
 
-По результатам применения различных моделей машинного обучения получили следующее:
-* применении градиентного бустинга с 30 деревьями дает качество прогнозов (отношение правильных предсказаний) 0.6895
-* применение логической регрессии даёт качество прогнозов 0.716315
-* применение логической регресси при добавлении "мешка слов" по героям даёт качество прогноза 0.7507 
+Based on the results of applying various machine learning models, we got the following:
+* application of gradient boosting with 30 trees gives prediction quality (correct prediction ratio) 0.6895
+* application of logical regression gives forecast quality 0.716315
+* application of logical regression when adding a "bag of words" for heroes gives a forecast quality of 0.7507
 
-**ИТОГИ**
-> * данный подход может быть применен к задачам, где необходимо предсказания вероятности покупки услуги клиентом банка, предсказание вероятности оттока клиента к другому поставщику услуг и т.д. 
+**CONCLUSIONS**
+> * this approach can be applied to problems where it is necessary to predict the likelihood of buying a service by a bank client, predicting the likelihood of a client churning to another service provider, etc. 
 > 
-> В ходе выполнения проекта:
-> * научились извлекать признаки из сырых данных и использовать различные библиотеки и средства для анализа данных
-> * применили различные модели машинного обучения и проанализировали как добавление признаков влияет на качество прогноза
+> During the project:
+> * learned how to extract features from raw data and use various libraries and tools for data analysis
+> * applied various machine learning models and analyzed how adding features affects forecast quality
 
 ---
  
