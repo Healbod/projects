@@ -9,7 +9,7 @@
 
 The New York Taxi and Limousine Commission (TLC) has been providing detailed, anonymized travel data for customers since 2009. Cars painted yellow have the right to take passengers on the streets at any of the five city bureaus.
 
-![](taxi_NY/data/df_regions/NY_taxi.JPG)
+![](taxi_NY/data/df_regions/NY_taxi.jpg)
 
 The raw data for yellow taxi rides can be found on the [TLC](http://www.nyc.gov/html/tlc/html/about/trip_record_data.shtml).
 This data is broken down into files by month. Each file contains the following trip information:
